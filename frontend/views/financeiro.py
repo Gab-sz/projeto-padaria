@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from backend.financeiro import listar_despesas, inserir_despesa, listar_recebimentos, inserir_recebimento
 from backend.categorias import listar_categorias_financeiras
+from backend.exportacao import exportar_despesas, exportar_recebimentos
 
 class FinanceiroView(ttk.Frame):
     def __init__(self, parent, controller):
@@ -48,8 +49,9 @@ class FinanceiroView(ttk.Frame):
         self.tree_d = ttk.Treeview(parent, columns=columns, show="headings")
         for col in columns: self.tree_d.heading(col, text=col)
         self.tree_d.pack(fill="both", expand=True, pady=5)
-        
-    def _build_receitas(self, parent):
+
+        btn_csv_d = ttk.Button(parent, text="⬇ Exportar CSV", command=exportar_despesas)
+        btn_csv_d.pack(anchor="e", padx=5, pady=(0, 5))
         frame_add = ttk.LabelFrame(parent, text=" Novo Recebimento ", padding=10)
         frame_add.pack(fill="x", pady=5)
         
@@ -72,6 +74,9 @@ class FinanceiroView(ttk.Frame):
         self.tree_r = ttk.Treeview(parent, columns=columns, show="headings")
         for col in columns: self.tree_r.heading(col, text=col)
         self.tree_r.pack(fill="both", expand=True, pady=5)
+
+        btn_csv_r = ttk.Button(parent, text="⬇ Exportar CSV", command=exportar_recebimentos)
+        btn_csv_r.pack(anchor="e", padx=5, pady=(0, 5))
         
     def on_show(self):
         self.categorias_cache = []

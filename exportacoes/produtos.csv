@@ -1,0 +1,8 @@
+﻿id_produto;nome;categoria;preco_venda;custo_producao
+1;Pão Francês 50g;Padaria;0,50;0,15
+2;Café Espresso;Padaria;4,00;1,00
+3;Leite Integral 1L;Padaria;5,00;3,50
+4;Bolo de Cenoura;Padaria;18,00;6,00
+5;Pão de Queijo;Padaria;3,00;1,00
+6;Salgado Assado;Padaria;6,00;2,50
+7;Suco Natural 300ml;Padaria;7,00;2,50
