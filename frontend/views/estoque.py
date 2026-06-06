@@ -13,7 +13,7 @@ class EstoqueView(ttk.Frame):
         lbl_titulo.pack(pady=10)
         
         # Tabela
-        columns = ("ID", "Nome", "Categoria", "Unid.", "Quantidade", "Estoque Mín.")
+        columns = ("ID", "Nome", "Unid.", "Quantidade", "Estoque Mín.")
         self.tree = ttk.Treeview(self, columns=columns, show="headings", height=10)
         for col in columns:
             self.tree.heading(col, text=col)
@@ -52,18 +52,13 @@ class EstoqueView(ttk.Frame):
         self.combo_unid = ttk.Combobox(frame_novo, values=["KG", "UN", "L", "CX"], state="readonly", width=5)
         self.combo_unid.grid(row=0, column=3, padx=5, pady=5)
         
-        ttk.Label(frame_novo, text="Categoria:").grid(row=0, column=4, padx=5, pady=5)
-        self.entry_categoria = ttk.Entry(frame_novo, width=15)
-        self.entry_categoria.insert(0, "Geral")
-        self.entry_categoria.grid(row=0, column=5, padx=5, pady=5)
-        
-        ttk.Label(frame_novo, text="Estoque Mín:").grid(row=0, column=6, padx=5, pady=5)
+        ttk.Label(frame_novo, text="Estoque Mín:").grid(row=0, column=4, padx=5, pady=5)
         self.entry_est_min = ttk.Entry(frame_novo, width=10)
         self.entry_est_min.insert(0, "10.0")
-        self.entry_est_min.grid(row=0, column=7, padx=5, pady=5)
+        self.entry_est_min.grid(row=0, column=5, padx=5, pady=5)
         
         btn_novo = ttk.Button(frame_novo, text="Cadastrar", command=self.cadastrar_insumo)
-        btn_novo.grid(row=0, column=8, padx=15, pady=5)
+        btn_novo.grid(row=0, column=6, padx=15, pady=5)
         
     def on_show(self):
         self.carregar_dados()
@@ -77,7 +72,6 @@ class EstoqueView(ttk.Frame):
                 self.tree.insert("", "end", values=(
                     i['id_insumo'], 
                     i['nome'], 
-                    i['categoria'],
                     i['unidade_medida'], 
                     i['quantidade_atual'], 
                     i['estoque_minimo']
@@ -111,20 +105,17 @@ class EstoqueView(ttk.Frame):
     def cadastrar_insumo(self):
         nome = self.entry_nome.get().strip()
         unid = self.combo_unid.get().strip()
-        categoria = self.entry_categoria.get().strip()
         try:
             est_min = float(self.entry_est_min.get().replace(",", "."))
-            if not nome or not unid or not categoria: raise ValueError
+            if not nome or not unid: raise ValueError
         except ValueError:
             messagebox.showwarning("Aviso", "Preencha todos os campos corretamente.")
             return
             
         try:
-            inserir_insumo(nome, categoria, 0.0, unid, est_min)
+            inserir_insumo(nome, 0.0, unid, est_min)
             messagebox.showinfo("Sucesso", "Insumo cadastrado!")
             self.entry_nome.delete(0, tk.END)
-            self.entry_categoria.delete(0, tk.END)
-            self.entry_categoria.insert(0, "Geral")
             self.combo_unid.set("")
             self.entry_est_min.delete(0, tk.END)
             self.entry_est_min.insert(0, "10.0")
