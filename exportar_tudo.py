@@ -118,14 +118,13 @@ def exportar_itens_venda(pasta: str):
 def exportar_estoque(pasta: str):
     dados = listar_insumos()
     cabecalho = [
-        "id_insumo", "nome", "categoria", "unidade_medida",
+        "id_insumo", "nome", "unidade_medida",
         "quantidade_atual", "estoque_minimo", "ultima_atualizacao"
     ]
     linhas = [
         [
             i["id_insumo"],
             i["nome"],
-            i["categoria"],
             i["unidade_medida"],
             fmt_decimal(i["quantidade_atual"]),
             fmt_decimal(i["estoque_minimo"]),
