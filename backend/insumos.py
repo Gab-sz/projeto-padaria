@@ -2,7 +2,7 @@ import sqlite3
 import time
 from backend.conexao import conectar
 
-def inserir_insumo(nome: str, categoria: str, quantidade_atual: float, unidade_medida: str, estoque_minimo: float) -> int:
+def inserir_insumo(nome: str, quantidade_atual: float, unidade_medida: str, estoque_minimo: float) -> int:
     """
     Insere um novo insumo (matéria-prima) no estoque e retorna o ID gerado.
     O campo data_atualizacao é preenchido com o Unix Timestamp atual.
@@ -12,10 +12,10 @@ def inserir_insumo(nome: str, categoria: str, quantidade_atual: float, unidade_m
         cursor = conn.cursor()
         cursor.execute(
             """
-            INSERT INTO insumos (nome, categoria, quantidade_atual, unidade_medida, estoque_minimo, data_atualizacao)
-            VALUES (?, ?, ?, ?, ?, ?);
+            INSERT INTO insumos (nome, quantidade_atual, unidade_medida, estoque_minimo, data_atualizacao)
+            VALUES (?, ?, ?, ?, ?);
             """,
-            (nome, categoria, quantidade_atual, unidade_medida, estoque_minimo, data_atualizacao)
+            (nome, quantidade_atual, unidade_medida, estoque_minimo, data_atualizacao)
         )
         return cursor.lastrowid
 
@@ -28,7 +28,7 @@ def listar_insumos() -> list[dict]:
         cursor = conn.cursor()
         cursor.execute(
             """
-            SELECT id_insumo, nome, categoria, quantidade_atual, unidade_medida, estoque_minimo, data_atualizacao
+            SELECT id_insumo, nome, quantidade_atual, unidade_medida, estoque_minimo, data_atualizacao
             FROM insumos;
             """
         )

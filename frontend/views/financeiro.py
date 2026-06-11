@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from datetime import datetime
 from backend.financeiro import listar_despesas, inserir_despesa, listar_recebimentos, inserir_recebimento
 from backend.categorias import listar_categorias_financeiras
 from backend.exportacao import exportar_despesas, exportar_recebimentos
@@ -95,11 +96,19 @@ class FinanceiroView(ttk.Frame):
             
             for item in self.tree_d.get_children(): self.tree_d.delete(item)
             for d in listar_despesas():
-                self.tree_d.insert("", "end", values=(d['id'], d['descricao'], f"R$ {d['valor_despesa']:.2f}", d['data_despesa'], d['categoria_nome']))
+                try:
+                    data_f = datetime.fromtimestamp(d['data_despesa']).strftime('%d/%m/%Y %H:%M')
+                except Exception:
+                    data_f = str(d['data_despesa'])
+                self.tree_d.insert("", "end", values=(d['id'], d['descricao'], f"R$ {d['valor_despesa']:.2f}", data_f, d['categoria_nome']))
                 
             for item in self.tree_r.get_children(): self.tree_r.delete(item)
             for r in listar_recebimentos():
-                self.tree_r.insert("", "end", values=(r['id'], r['descricao'], f"R$ {r['valor_recebido']:.2f}", r['data_recebimento'], r['categoria']))
+                try:
+                    data_f = datetime.fromtimestamp(r['data_recebimento']).strftime('%d/%m/%Y %H:%M')
+                except Exception:
+                    data_f = str(r['data_recebimento'])
+                self.tree_r.insert("", "end", values=(r['id'], r['descricao'], f"R$ {r['valor_recebido']:.2f}", data_f, r['categoria']))
         except Exception as e:
             messagebox.showerror("Erro", f"Falha no carregamento:\n{e}")
             

@@ -42,7 +42,6 @@ def criar_tabelas():
     CREATE TABLE IF NOT EXISTS "insumos" (
         "id_insumo" INTEGER NOT NULL UNIQUE,
         "nome" TEXT NOT NULL,
-        "categoria" TEXT NOT NULL,
         "quantidade_atual" REAL NOT NULL,
         "unidade_medida" TEXT NOT NULL,
         "estoque_minimo" REAL NOT NULL,
